@@ -7,7 +7,7 @@ import java.net.*;
 
 public class Client 
 {
-    public static final int SERVER_PORT = 2675;
+    public static final int SERVER_PORT = 3246;
 
     public static void main(String[] args) 
     {
@@ -27,6 +27,7 @@ public class Client
 
 	// Try to open a socket on SERVER_PORT
 	// Try to open input and output streams
+	System.out.println("Client online");
 	try 
 	{
 	    clientSocket = new Socket(args[0], SERVER_PORT);
@@ -51,7 +52,7 @@ public class Client
 	{
 	    try 
 	    {
-		while ((userInput = stdInput.readLine())!= null)
+		while ((userInput = stdInput.readLine())!= "end")
 		{
 		    os.println(userInput);
 		    serverInput = is.readLine();
@@ -64,6 +65,7 @@ public class Client
 		os.close();
 		is.close();
 		clientSocket.close();   
+		System.out.println("client closed");
 	    } 
 	    catch (IOException e) 
 	    {
