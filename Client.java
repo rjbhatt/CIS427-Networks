@@ -57,10 +57,14 @@ public class Client
 		    os.println(userInput);
 		    serverInput = is.readLine();
 		    System.out.println("Echo:" + serverInput);
+		    if (serverInput.equals("QUIT"))
+		    		break;
+		    else if(serverInput.equals("SHUTDOWN"))
+		    		break;
 		}
 
 		// close the input and output stream
-		// close the socket
+		// close the sockset
 
 		os.close();
 		is.close();
