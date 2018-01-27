@@ -46,7 +46,7 @@ public class Server {
 		{
 			System.out.println(line +"1");
 			//ADD
-			if (line=="ADD")
+			if (line.equals("ADD"))
 				System.out.println("function" + line);
 			else
 				System.out.println("ADD NOT MATCHED");
