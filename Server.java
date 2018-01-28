@@ -48,7 +48,6 @@ public class Server {
 				// fileimport(contacts);
 				while ((line = is.readLine()) != null) 
 				{	
-					//ADD
 					if (line.substring(0, 3).equals("ADD")) 
 						add(line,contacts,os,max);
 					else  if (line.substring(0, 4).equals("LIST"))
@@ -61,11 +60,12 @@ public class Server {
 						 os.println("200 OK"); 
 						break;
 					}
-					// write the data of the array lists to the file 
+					
 				   
 				    os.println("200 OK"); 
 				}
 		
+				// write data to file
 				//close input and output stream and socket
 				is.close();
 				os.close();
@@ -104,24 +104,25 @@ public class Server {
 	}
 	
 	static void add(String line,ArrayList<ArrayList<String>> contacts,PrintStream os, int max) {
-		//if(spotOpen(contacts))
-		// insert data
-	    //else
-		if (contacts.size()<max) {
+		int spot=spotOpen(contacts);
+		 if (spot ==-1 && contacts.size()<max ) {
+	    		contacts.add(new ArrayList<String>());
+	    		spot = contacts.size()-1;
+	    }
+	    
 		String[] parts = line.split(" ");
-		contacts.add(new ArrayList<String>());
-		contacts.get(contacts.size()-1).add(Integer.toString(contacts.size()+1000)); // ID generated
-		contacts.get(contacts.size()-1).add(parts[1]); // ADD FNAME 
-		contacts.get(contacts.size()-1).add(parts[2]); // ADD LNAME
+		
+		contacts.get(spot).add(Integer.toString(spot+1001)); // ID generated
+		contacts.get(spot).add(parts[1]); // ADD FNAME 
+		contacts.get(spot).add(parts[2]); // ADD LNAME
 		
 		if(parts[3].matches("(\\d-)?(\\d{3}-)?\\d{3}-\\d{4}")) // check if phone follows format
-			contacts.get(contacts.size()-1).add(parts[3]);  // if follows format, insert into array
+			contacts.get(spot).add(parts[3]);  // if follows format, insert into array
 		else
 			System.out.println("Throw exception");
 		
 		// if exception thrown delete the data from that row 
-		}
-	}
+	} // DONE
 	
 	static void delete(ArrayList<ArrayList<String>> contacts, String line,PrintStream os) {
 	
@@ -142,10 +143,10 @@ public class Server {
 		}
 	} 
 
-	boolean spotOpen(ArrayList<ArrayList<String>> contacts) {
-		for(int i=0;i<contacts.size();i++)
-			if(contacts.get(i).get(0)== null)
-				return true;
-		return false;
+	static int spotOpen(ArrayList<ArrayList<String>> contacts) {
+		for(int i=0;i<contacts.size();i++) 
+			if(contacts.get(i).size()==0)
+				return i;
+		return -1;
 	}
-}
+}// DONE

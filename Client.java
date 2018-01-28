@@ -63,7 +63,7 @@ public class Client
 				}
 		
 				// close the input and output stream
-				// close the sockset
+				// close the socket set
 		
 				os.close();
 				is.close();
