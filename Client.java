@@ -56,10 +56,11 @@ public class Client
 				{
 				    os.println(userInput);
 				    serverInput = is.readLine();
-				    System.out.println(serverInput);
-				   
-				     if(serverInput.equals("SHUTDOWN")||serverInput.equals("QUIT"))
-				    		break;
+				    
+				     if(serverInput.substring(0, 4).equals("SHUTDOWN")||serverInput.equals("QUIT")) {
+				    	 	//System.out.println();
+				    	 	break;}
+				     System.out.println(serverInput);
 				}
 		
 				// close the input and output stream

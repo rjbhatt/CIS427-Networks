@@ -28,7 +28,7 @@ public class Server {
 		    System.out.println(e);
 		    System.out.println("Connection failed");
 		}   
-	
+		openFile();
 		// Create a socket object from the ServerSocket to listen and accept connections.
 		// Open input and output streams
 	
@@ -57,7 +57,9 @@ public class Server {
 					else if (line.substring(0, 6).equals("DELETE")) 
 						delete(contacts, line, os);
 					else if (line.substring(0, 8).equals("SHUTDOWN")) {
-						 os.println("200 OK"); 
+						//os.println(line); 
+						os.println(line +" 200 OK");
+						 
 						break;
 					}
 					
@@ -80,11 +82,11 @@ public class Server {
 		}
     }
     
-    private Scanner x;
-	public void openFile()
+    private static Scanner x;
+	public static void openFile()
 	{
 		try{
-			x = new Scanner (new File("conatcts.txt"));
+			x = new Scanner (new File("contacts.txt"));
 			System.out.println("File Opened");
 			
 		}
@@ -118,8 +120,9 @@ public class Server {
 		
 		if(parts[3].matches("(\\d-)?(\\d{3}-)?\\d{3}-\\d{4}")) // check if phone follows format
 			contacts.get(spot).add(parts[3]);  // if follows format, insert into array
-		else
-			System.out.println("Throw exception");
+		else {
+			System.out.println("Throw exception"); 
+			contacts.get(spot).clear();}
 		
 		// if exception thrown delete the data from that row 
 	} // DONE
@@ -131,7 +134,8 @@ public class Server {
 				
 		result -= 1001;
 		contacts.get(result).clear();
-		os.println("200 OK"); 
+		os.println("200 OK");  
+		
 	}// DONE
 	
 	static void list(ArrayList<ArrayList<String>> contacts,PrintStream os){		
