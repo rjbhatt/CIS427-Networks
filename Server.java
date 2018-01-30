@@ -28,7 +28,7 @@ public class Server {
 		    System.out.println(e);
 		    System.out.println("Connection failed");
 		}   
-		openFile();
+
 		// Create a socket object from the ServerSocket to listen and accept connections.
 		// Open input and output streams
 	
@@ -36,6 +36,15 @@ public class Server {
 		{
 		    try 
 		    {
+		    		ArrayList<ArrayList<String>> contacts = new ArrayList<ArrayList<String>>();
+				openFile();
+				readFile(contacts);
+//				for(int i=0;i<contacts.size();i++) {
+//					for(int j=0;j<contacts.get(i).size();j++)
+//						System.out.print(contacts.get(i).get(j) + i + j);
+//					System.out.println();
+//					}
+				 final int max = 20;
 				serviceSocket = myServerice.accept();
 				is = new BufferedReader (new InputStreamReader(serviceSocket.getInputStream()));
 				os = new PrintStream(serviceSocket.getOutputStream());
@@ -43,8 +52,7 @@ public class Server {
 				// Open the file holding data
 				// move data into the arraylist
 				
-				ArrayList<ArrayList<String>> contacts = new ArrayList<ArrayList<String>>();
-				 final int max = 20;
+				
 				// fileimport(contacts);
 				while ((line = is.readLine()) != null) 
 				{	
@@ -96,11 +104,17 @@ public class Server {
 		}
 	}
 	
-	public void readFile(ArrayList<ArrayList<String>> contacts)
+	static void readFile(ArrayList<ArrayList<String>> contacts)
 	{
 		int rows=0;
 		while(x.hasNext())
-			rows++;
+		{
+			contacts.add(new ArrayList<String>());
+			System.out.println(contacts.size());
+			String [] parts = x.next().split(" ");
+			for (int i=0;i <parts.length;i++)
+				contacts.get(contacts.size()-1).add(parts[i]); 	
+		}
 		
 		x.close();
 	}
@@ -142,6 +156,7 @@ public class Server {
 		for(int i=0;i< contacts.size();i++) {
 			for(int j=0;j<contacts.get(i).size();j++) {
 				System.out.print(contacts.get(i).get(j) + " \t");
+				os.println(contacts.get(i).get(j) + " \t");
 			}
 			System.out.println();
 		}
