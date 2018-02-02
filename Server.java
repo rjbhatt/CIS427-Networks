@@ -123,7 +123,7 @@ public class Server {
 			contacts.get(spot).add(parts[3]);  // if follows format, insert into array
 		else {
 			System.out.println("Throw exception"); 
-			contacts.get(spot).clear();}
+			contacts.remove(spot);}
 	  }
 	  else
 		  System.out.println("Can not insert data, file is full");
@@ -145,17 +145,17 @@ public class Server {
 	}// DONE
 	
 	static void list(ArrayList<ArrayList<String>> contacts,PrintStream os){	
-		String output="";
+		String output="=";
 		for(int i=0;i< contacts.size();i++) {
 			for(int j=0;j<contacts.get(i).size();j++) {
-				System.out.print(contacts.get(i).get(j)+"\t");
-				//output+=contacts.get(i).get(j);
-				//output+="\t";
+				//System.out.print(contacts.get(i).get(j)+"\t");
+				output+=contacts.get(i).get(j);
+				output+="\t";
 			}
-			//output+="=";
-			System.out.println();
+			output+="=";
+			//System.out.println();
 		}
-		os.println(output);
+		os.println("LIST"+output+"200 OK");
 	} //DONE
 
 }

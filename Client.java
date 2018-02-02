@@ -54,16 +54,18 @@ public class Client
 		    {
 				while ((userInput = stdInput.readLine())!= null)
 				{
-				    os.println(userInput);
+					  //System.out.print("input:"); 
+					os.println(userInput);
+				    
 				    serverInput = is.readLine();
 				  
-				   /* if(userInput.substring(0,4).equals("LIST"))
+				    if(serverInput.substring(0,4).equals("LIST"))
 				    {
 				    		String [] parts = serverInput.split("=");
-				    		for(int i=0;i<parts.length;i++)
+				    		for(int i=1;i<parts.length;i++)
 				    			System.out.println(parts[i]);
-				    }*/
-				     if(serverInput.equals("QUIT")||serverInput.substring(0,8).equals("SHUTDOWN")) {
+				    }
+				    else if(serverInput.substring(0,4).equals("QUIT")||serverInput.substring(0,4).equals("SHUT")){
 				    	 	//System.out.println();
 				    	 	break;}
 				     System.out.println(serverInput);
@@ -83,5 +85,10 @@ public class Client
 		    		System.err.println("IOException:  " + e);
 		    }
 		}
-    }           
+    }
+    
+    static void list() {
+    	
+    }
+    
 }
