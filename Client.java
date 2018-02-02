@@ -56,8 +56,14 @@ public class Client
 				{
 				    os.println(userInput);
 				    serverInput = is.readLine();
-				    
-				     if(serverInput.substring(0, 4).equals("SHUTDOWN")||serverInput.equals("QUIT")) {
+				  
+				   /* if(userInput.substring(0,4).equals("LIST"))
+				    {
+				    		String [] parts = serverInput.split("=");
+				    		for(int i=0;i<parts.length;i++)
+				    			System.out.println(parts[i]);
+				    }*/
+				     if(serverInput.equals("QUIT")||serverInput.substring(0,8).equals("SHUTDOWN")) {
 				    	 	//System.out.println();
 				    	 	break;}
 				     System.out.println(serverInput);
