@@ -60,7 +60,7 @@ public class Server {
 					else
 						os.println("301 invalid command");
 				   
-				    os.println("200 OK"); 
+				   //os.println("200 OK"); 
 				}
 		
 				//close input and output stream and socket
@@ -124,6 +124,7 @@ public class Server {
 		else {
 			System.out.println("Throw exception"); 
 			contacts.remove(spot);}
+		os.println("200 OK"); 
 	  }
 	  else
 		  System.out.println("Can not insert data, file is full");
@@ -135,7 +136,13 @@ public class Server {
 	
 		String[] parts = line.split(" ");
 		int result = Integer.parseInt(parts[1]);
-				
+		for(int i=0;i<contacts.size();i++) {
+			if(contacts.get(i).get(0).equals(parts[1]))
+				System.out.println("found index");
+			else
+				System.out.println("contact does not exist");
+		}
+			
 		result -= 1001;
 		
 		contacts.remove(result);
@@ -145,7 +152,7 @@ public class Server {
 	}// DONE
 	
 	static void list(ArrayList<ArrayList<String>> contacts,PrintStream os){	
-		String output="=";
+		String output="";
 		for(int i=0;i< contacts.size();i++) {
 			for(int j=0;j<contacts.get(i).size();j++) {
 				//System.out.print(contacts.get(i).get(j)+"\t");
@@ -155,7 +162,7 @@ public class Server {
 			output+="=";
 			//System.out.println();
 		}
-		os.println("LIST"+output+"200 OK");
+		os.println("LIST="+output+"200 OK");
 	} //DONE
 
 }
