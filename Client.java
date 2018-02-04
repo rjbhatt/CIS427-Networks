@@ -7,7 +7,7 @@ import java.net.*;
 import java.util.*;
 public class Client 
 {
-    public static final int SERVER_PORT = 3245;
+    public static final int SERVER_PORT = 3246;
 
     public static void main(String[] args) 
     {
