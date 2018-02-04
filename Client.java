@@ -58,16 +58,15 @@ public class Client
 				    
 				    serverInput = is.readLine();
 				  
-				    if(serverInput.substring(0,4).equals("LIST"))
+				    if(serverInput.substring(0,3).equals("ADD")||serverInput.substring(0,4).equals("LIST"))
 				    {
 				    		String [] parts = serverInput.split("=");
 				    		
 				    		for(int i=1;i<parts.length;i++) // LIST is in index 0 so start from 1
 				    			System.out.println(parts[i]);   		
 				    }
-				    else if(serverInput.substring(0,4).equals("QUIT")||serverInput.substring(0,4).equals("SHUT")){
-				    	 	
-				    	 	break;}
+				    else if(serverInput.substring(0,4).equals("QUIT")||serverInput.substring(0,4).equals("SHUT")) 	 	
+				    	 	break;
 				    else
 				     System.out.println(serverInput);
 				}

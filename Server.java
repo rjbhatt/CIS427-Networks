@@ -18,7 +18,8 @@ public class Server {
 		BufferedReader is;
 		PrintStream os;
 		Socket serviceSocket = null;
-			
+		ArrayList<ArrayList<String>> contacts = new ArrayList<ArrayList<String>>();
+		readFile(contacts);
 		try {// Try to open a server socket 
 		    myServerice = new ServerSocket(SERVER_PORT);
 		    System.out.println("Connected");
@@ -34,8 +35,7 @@ public class Server {
 		{
 		    try 
 		    {
-		    		ArrayList<ArrayList<String>> contacts = new ArrayList<ArrayList<String>>();
-				readFile(contacts);
+		    		
 				final int max = 20;
 				serviceSocket = myServerice.accept();
 				is = new BufferedReader (new InputStreamReader(serviceSocket.getInputStream()));
@@ -94,12 +94,12 @@ public class Server {
 		}
 		catch(Exception e){
 			
-			System.out.println("Does not exists");
+			System.out.println("File does not exists");
 		}
 		while(x.hasNextLine())
 		{
 			ArrayList<String> c1= new ArrayList<String>();
-			String [] parts = x.nextLine().split(" "); // using next line to read entire line instead of bit of data
+			String [] parts = x.nextLine().split(" "); // using next line to read entire line instead each of bit of data
 			for (int i=0;i <parts.length;i++)
 				c1.add(parts[i]);	
 			contacts.add(c1);
@@ -108,28 +108,27 @@ public class Server {
 	}
 	
 	static void add(String line,ArrayList<ArrayList<String>> contacts,PrintStream os, int max) {
-		
-	  if(contacts.size()<max) {
-			contacts.add(new ArrayList<String>());
-		    	int spot=contacts.size()-1;
+	  String[] parts = line.split(" ");
+	  if(contacts.size()<max&& parts.length==4) {
+		  contacts.add(new ArrayList<String>());
+		  int spot=contacts.size()-1; 
+		  int id = Integer.parseInt(contacts.get(spot-1).get(0))+1;
 			
-		    	String[] parts = line.split(" ");
+		  contacts.get(spot).add(Integer.toString(id));
+		  contacts.get(spot).add(parts[1]); // ADD FNAME 
+		  contacts.get(spot).add(parts[2]); // ADD LNAME
 			
-			int id = Integer.parseInt(contacts.get(spot-1).get(0))+1;
-			
-			contacts.get(spot).add(Integer.toString(id));
-			contacts.get(spot).add(parts[1]); // ADD FNAME 
-			contacts.get(spot).add(parts[2]); // ADD LNAME
-			
-			if(parts[3].matches("(\\d-)?(\\d{3}-)?\\d{3}-\\d{4}")) { // check if phone follows format
-				contacts.get(spot).add(parts[3]);  // if follows format, insert into array
-				os.println("200 OK");
-				}
-			else {
-				os.println("301 message format error ");		
-				contacts.remove(spot);
+		  if(parts[3].matches("(\\d-)?(\\d{3}-)?\\d{3}-\\d{4}")) { // check if phone follows format
+			  contacts.get(spot).add(parts[3]);  // if follows format, insert into array
+			  os.println("ADD=200 OK=The new Record ID is " + Integer.toString(id));
+			}
+		  else {
+			  os.println("301 Message Format Error ");		
+			  contacts.remove(spot);
 			}
 		}
+	  else if(parts.length<4)
+		  os.println("301 Message Format Error");
 		
 	  else
 		  os.println("Can not insert data, file is full");
@@ -137,21 +136,25 @@ public class Server {
 	
 	static void delete(ArrayList<ArrayList<String>> contacts, String line,PrintStream os) {
 	
-		String[] parts = line.split(" ");
-		Boolean found = false;
-		int result = Integer.parseInt(parts[1]);
-		for(int i=0;i<contacts.size();i++) {
-			if(contacts.get(i).get(0).equals(parts[1])) {
-				result -= 1001;
-				contacts.remove(result);
-				found =true;
-				break;
+		String[] parts = line.split(" "); 
+		if (parts.length<2)
+			os.println("301 Message Format Error");
+		else {
+			Boolean found = false;
+			int result = Integer.parseInt(parts[1]);
+			for(int i=0;i<contacts.size();i++) {
+				if(contacts.get(i).get(0).equals(parts[1])) {
+					result -= 1001;
+					contacts.remove(result);
+					found =true;
+					break;
+				}
 			}
-		}
-		if (!found)
-			os.println("403 contact not found");
-		else
+		if (found)
 			os.println("200 OK");
+		else
+			os.println("403 Record ID does not exist");
+		}
 	}
 	
 	static void list(ArrayList<ArrayList<String>> contacts,PrintStream os){	
@@ -163,7 +166,7 @@ public class Server {
 			}
 			output+="=";
 		}
-		os.println("LIST="+output+"200 OK");
+		os.println("LIST=200 OK=The List of records in the book="+output);
 	} 
 
 	static void writeFile(ArrayList<ArrayList<String>> contacts) throws IOException {
