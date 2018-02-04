@@ -141,11 +141,9 @@ public class Server {
 			os.println("301 Message Format Error");
 		else {
 			Boolean found = false;
-			int result = Integer.parseInt(parts[1]);
 			for(int i=0;i<contacts.size();i++) {
 				if(contacts.get(i).get(0).equals(parts[1])) {
-					result -= 1001;
-					contacts.remove(result);
+					contacts.remove(i);
 					found =true;
 					break;
 				}
