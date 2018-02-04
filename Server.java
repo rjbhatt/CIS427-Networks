@@ -68,10 +68,14 @@ public class Server {
 				is.close();
 				os.close();
 				serviceSocket.close();
+				try {
 				if(line.equals("SHUTDOWN")){
 					writeFile(contacts);
 					myServerice.close();
 					break;
+				}}
+				catch(Exception e) {
+					System.out.println("client closed ");
 				}
 		    }   
 		    catch (IOException e) 
