@@ -138,17 +138,16 @@ public class Server {
 		int result = Integer.parseInt(parts[1]);
 		for(int i=0;i<contacts.size();i++) {
 			if(contacts.get(i).get(0).equals(parts[1])) {
-				System.out.println("found contact");
 				result -= 1001;
 				contacts.remove(result);
 				found =true;
-				System.out.println(found);
+				break;
 			}
-			if (!found)
-				os.println("403 contact not found");
-			else
-				os.println("200 OK");
 		}
+		if (!found)
+			os.println("403 contact not found");
+		else
+			os.println("200 OK");
 	}
 	
 	static void list(ArrayList<ArrayList<String>> contacts,PrintStream os){	
