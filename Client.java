@@ -54,7 +54,6 @@ public class Client
 		    {
 				while ((userInput = stdInput.readLine())!= null)
 				{
-					  //System.out.print("input:"); 
 					os.println(userInput);
 				    
 				    serverInput = is.readLine();
