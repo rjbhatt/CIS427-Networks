@@ -62,7 +62,7 @@ public class Client
 				    {
 				    		String [] parts = serverInput.split("=");
 				    		
-				    		for(int i=1;i<parts.length;i++) // LIST is in index 0 so start from 1
+				    		for(int i=1;i<parts.length;i++) // Begin index at 1 due to line from server beings with command itself
 				    			System.out.println(parts[i]);   		
 				    }
 				    else if(serverInput.substring(0,4).equals("QUIT")||serverInput.substring(0,4).equals("SHUT")) 	 	
@@ -86,9 +86,4 @@ public class Client
 		    }
 		}
     }
-    
-    static void list() {
-    	
-    }
-    
 }
