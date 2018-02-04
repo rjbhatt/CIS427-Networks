@@ -137,10 +137,11 @@ public class Server {
 	static void delete(ArrayList<ArrayList<String>> contacts, String line,PrintStream os) {
 	
 		String[] parts = line.split(" "); 
+		Boolean found = false;
 		if (parts.length<2)
 			os.println("301 Message Format Error");
 		else {
-			Boolean found = false;
+			
 			for(int i=0;i<contacts.size();i++) {
 				if(contacts.get(i).get(0).equals(parts[1])) {
 					contacts.remove(i);
