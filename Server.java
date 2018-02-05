@@ -42,7 +42,7 @@ public class Server {
 		
 				while ((line = is.readLine()) != null) 
 				{	
-					try {
+					
 						if (line.substring(0, 3).equals("ADD")) 
 							add(line,contacts,os,max);
 						else  if (line.substring(0, 4).equals("LIST")) 
@@ -56,11 +56,10 @@ public class Server {
 							os.println(line +" 200 OK"); 
 							break;
 						}
-					}
-					catch (Exception e) // empty command/ invalid format
-				    {
-				    		os.println("300 invalid command");
-				    }   
+						else
+							os.println("300 invalid command");
+					
+					
 				}
 		
 				//close input and output stream and socket if QUIT or SHUTDOWN is passed
@@ -92,7 +91,6 @@ public class Server {
 	{
 		try{
 			x = new Scanner (new File("contacts.txt"));
-			System.out.println("File Opened");
 		}
 		catch(Exception e){
 			
@@ -121,8 +119,12 @@ public class Server {
 	  if(contacts.size()<max&& parts.length==4) {
 		  contacts.add(new ArrayList<String>());
 		  int spot=contacts.size()-1; 
-		  int id = Integer.parseInt(contacts.get(spot-1).get(0))+1;
-			
+		  int id = 0;
+		 if(contacts.size()-1==0)
+			 id=1001;
+		 else
+			 id=Integer.parseInt(contacts.get(spot-1).get(0))+1;
+		  
 		  contacts.get(spot).add(Integer.toString(id));
 		  contacts.get(spot).add(parts[1]); // ADD FNAME 
 		  contacts.get(spot).add(parts[2]); // ADD LNAME
