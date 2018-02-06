@@ -65,8 +65,13 @@ public class Client
 				    		for(int i=1;i<parts.length;i++) // Begin index at 1 due to line from server beings with command itself
 				    			System.out.println(parts[i]);   		
 				    }
-				    else if(serverInput.substring(0,4).equals("QUIT")||serverInput.substring(0,4).equals("SHUT")) 	 	
-				    	 	break;
+				    else if(serverInput.substring(0,4).equals("QUIT")||serverInput.substring(0,4).equals("SHUT")) 	 {	
+				    	String [] parts = serverInput.split("=");
+			    		
+			    		for(int i=1;i<parts.length;i++) // Begin index at 1 due to line from server beings with command itself
+			    			System.out.println(parts[i]);
+				    		break;
+				    }
 				    else
 				     System.out.println(serverInput);
 				}
@@ -77,7 +82,6 @@ public class Client
 				os.close();
 				is.close();
 				clientSocket.close();   
-				System.out.println("client closed");
 				System.exit(0);
 		    } 
 		    catch (IOException e) 

@@ -48,12 +48,12 @@ public class Server {
 						else  if (line.substring(0, 4).equals("LIST")) 
 							list (contacts,os); 
 						else if (line.substring(0, 4).equals("QUIT")) {
-							os.println(line);
+							os.println(line+"=200 OK");
 							break;}
 						else if (line.substring(0, 6).equals("DELETE")) 
 							delete(contacts, line, os);
 						else if (line.substring(0, 8).equals("SHUTDOWN")) {
-							os.println(line +" 200 OK"); 
+							os.println(line +"=200 OK"); 
 							break;
 						}
 						else
